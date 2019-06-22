@@ -1,0 +1,6 @@
+---
+# file: webservers.yml
+
+- hosts: s01-xenial
+  roles:
+    - openvpn_client

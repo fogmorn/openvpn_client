@@ -1,0 +1,27 @@
+---
+# file: roles/openvpn_client/tasks/install.yml
+
+- name: "Update apt cache"
+  apt:
+    update_cache: yes
+  register: cache_update
+  until: cache_update is success
+  retries: 3
+  delay: 2
+  become: yes
+
+- name: "Install openvpn ver. {{ openvpn_client_pkg_ver }}"
+  apt:
+    name: openvpn={{ openvpn_client_pkg_ver }}
+    state: present
+  become: yes
+
+- name: "Apply config template"
+  template:
+    src: "{{ item }}.j2"
+    dest: "/{{ item }}"
+    mode: 0600
+  with_items:
+    - "{{ openvpn_client_conf_path }}/{{ openvpn_client_conf_name }}"
+  become: yes
+  notify: "reload and start service"

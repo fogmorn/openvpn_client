@@ -1,0 +1,2 @@
+[s01-xenial]
+192.168.1.108 ansible_python_interpreter="/usr/bin/python3.5"

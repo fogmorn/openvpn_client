@@ -1,0 +1,7 @@
+---
+# file: roles/openvpn_client/tasks/preinstall.yml
+
+- name: "Is openvpn already installed?"
+  stat:
+    path: "/{{ openvpn_client_conf_path }}"
+  register: vpnapp

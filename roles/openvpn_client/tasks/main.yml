@@ -1,0 +1,19 @@
+---
+# file: roles/openvpn_client/tasks/main.yml
+
+- block:
+  - name: "Preinstall checking that openvpn is present"
+    include_tasks: preinstall.yml
+
+  - name: "Openvpn already installed"
+    debug:
+      msg: "Openvpn is already installed or /etc isn't clean. Interrupt."
+    when:
+      - vpnapp.stat.exists
+  
+  - name: "Install openvpn"
+    include_tasks: install.yml
+    when:
+      - vpnapp.stat.exists == False
+  when:
+    - (ansible_distribution == "Ubuntu" and ansible_distribution_release == "xenial")

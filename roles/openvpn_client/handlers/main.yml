@@ -1,0 +1,16 @@
+---
+# file: roles/openvpn_client/handlers/main.yml
+
+- name: "openvpn reload"
+  systemd:
+    name: "openvpn"
+    state: reloaded
+  become: yes
+  listen: "reload and start service"
+
+- name: "openvpn start"
+  systemd:
+    name: "openvpn@{{ openvpn_client_service_name }}"
+    state: started
+  become: yes
+  listen: "reload and start service"

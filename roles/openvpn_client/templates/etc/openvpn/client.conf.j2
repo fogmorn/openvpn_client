@@ -1,0 +1,27 @@
+# {{ ansible_managed }}
+
+client
+nobind
+dev tun
+key-direction 1
+remote-cert-tls server
+
+remote {{ openvpn_client_remote.vars | join(' ') }}
+
+<key>
+{{ openvpn_client_priv_key }}
+</key>
+<cert>
+{{ openvpn_client_cert }}
+</cert>
+<ca>
+{{ openvpn_client_ca }}
+</ca>
+<tls-auth>
+{{ openvpn_client_tls_auth_key }}
+</tls-auth>
+key-direction 1
+
+auth-nocache
+comp-lzo
+reneg-sec 259200
